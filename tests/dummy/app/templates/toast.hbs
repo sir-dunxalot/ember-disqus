@@ -1,8 +1,14 @@
 <h2>Toast</h2>
 
-{{disqus-comment-count identifier='toast' data-test='toast-comment-count'}}
+{{disqus-comment-count
+  identifier='toast'
+  removeNoun=true
+  data-test='toast-comment-count'
+}}
 
 <hr>
+
+<strong class="warning">Don't add comments - this affects the test suite</strong>
 
 {{disqus-comments identifier='toast' data-test='toast-comments'}}
 

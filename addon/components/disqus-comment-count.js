@@ -13,6 +13,14 @@ export default Ember.Component.extend({
 
   identifier: null,
 
+  disqusCallback() {
+    const disqusWidgets = window.DISQUSWIDGETS;
+
+    if (disqusWidgets) {
+      disqusWidgets.getCount(); // Required when transitioning between routes
+    }
+  },
+
   /**
   Assert that all required properties have been passed to this component and, if required, load the `count.js` script.
 

@@ -23,7 +23,8 @@
     "currentPath",
     "currentRouteName",
     "inspect",
-    "loadDisqusApiAndWait"
+    "loadDisqusApiAndWait",
+    "waitForCommentsToLoad"
   ],
   "node": false,
   "browser": false,

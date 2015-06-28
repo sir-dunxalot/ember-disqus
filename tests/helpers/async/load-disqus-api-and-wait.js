@@ -1,9 +1,13 @@
 import Ember from 'ember';
 import loadDisqusApi from 'ember-disqus/utils/load-disqus-api';
-// import selectorFor from '../selector-for';
 
 export default Ember.Test.registerAsyncHelper('loadDisqusApiAndWait',
   function(app, fileName, callback) {
+
+
+    debugger;
+    console.log('in async helper');
+
     const currentRouteName = app.testHelpers.currentRouteName();
     const route = app.__container__.lookup(`route:${currentRouteName}`);
 

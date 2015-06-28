@@ -14,9 +14,13 @@ function testFileName(assert, fileName) {
 
   /* Make a single request for the embed file */
 
+  console.log('hey1');
   loadDisqusApiAndWait(fileName);
+  console.log('hey2');
 
   andThen(function() {
+
+    console.log('GOT THE THE ANDTHEN');
 
     assert.equal(window.disqus_shortname, expectedShortname,
       'The util should set the Disqus shortname on the window');
@@ -34,6 +38,10 @@ function testFileName(assert, fileName) {
     assert.ok(retrievedFromCache,
       `The cache should handle the second API call for ${fileName}`);
 
+  });
+
+  andThen(function() {
+    console.log('andThen after the pause');
   });
 }
 
@@ -53,21 +61,21 @@ test('Default use of loadDisqusApi for embed', function(assert) {
   testFileName(assert, 'embed');
 });
 
-test('Default use of loadDisqusApi for embed', function(assert) {
-  assert.expect(3);
+// test('Default use of loadDisqusApi for embed', function(assert) {
+//   assert.expect(3);
 
-  testFileName(assert, 'count');
-});
+//   testFileName(assert, 'count');
+// });
 
-test('Disabling lazyLoading with the loadDisqusApi', function(assert) {
-  assert.expect(6);
+// test('Disabling lazyLoading with the loadDisqusApi', function(assert) {
+//   assert.expect(6);
 
-  /* Disable lazy loading */
+//    Disable lazy loading
 
-  application.__container__.lookupFactory('config:environment').disqus.lazyLoad = false;
+//   application.__container__.lookupFactory('config:environment').disqus.lazyLoad = false;
 
-  /* Then check the APIs still load */
+//   /* Then check the APIs still load */
 
-  testFileName(assert, 'embed');
-  testFileName(assert, 'count');
-});
+//   testFileName(assert, 'embed');
+//   testFileName(assert, 'count');
+// });

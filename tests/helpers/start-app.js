@@ -5,6 +5,7 @@ import config from '../../config/environment';
 
 import inspect from './sync/inspect';
 import loadDisqusApiAndWait from './async/load-disqus-api-and-wait';
+import waitForCommentsToLoad from './async/wait-for-comments-to-load';
 
 export default function startApp(attrs) {
   var application;

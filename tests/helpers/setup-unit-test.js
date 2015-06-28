@@ -26,6 +26,14 @@ export default function setupUnitTest(context, options) {
 
   /* Fake loading of API */
 
-  window.DISQUS = {};
+  window.DISQUS = {
+    reset() {
+
+    },
+
+    trigger() {
+
+    },
+  };
 
 }
