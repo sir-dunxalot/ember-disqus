@@ -18,10 +18,6 @@ function testFileName(assert, fileName) {
 
   andThen(function() {
 
-
-    assert.equal(document.readyState, 'complete',
-      'The document should have loaded before the Disqus API');
-
     assert.equal(window.disqus_shortname, expectedShortname,
       'The util should set the Disqus shortname on the window');
 
@@ -52,13 +48,26 @@ module('Acceptance | load disqus api', {
 });
 
 test('Default use of loadDisqusApi for embed', function(assert) {
-  assert.expect(4);
+  assert.expect(3);
 
   testFileName(assert, 'embed');
 });
 
 test('Default use of loadDisqusApi for embed', function(assert) {
-  assert.expect(4);
+  assert.expect(3);
 
+  testFileName(assert, 'count');
+});
+
+test('Disabling lazyLoading with the loadDisqusApi', function(assert) {
+  assert.expect(6);
+
+  /* Disable lazy loading */
+
+  application.__container__.lookupFactory('config:environment').disqus.lazyLoad = false;
+
+  /* Then check the APIs still load */
+
+  testFileName(assert, 'embed');
   testFileName(assert, 'count');
 });
