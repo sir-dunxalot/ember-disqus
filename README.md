@@ -35,7 +35,9 @@ module.exports = function(environment) {
 
 Disqus' main functionality is to display comments relating to a particular page - that being a 'thread' of comments. Disqus highly reccomends each thread be identified using a unique identifer instead of other means like the URL incase your URLs should change or you want to show the same thread on multiple routes.
 
-Thus, this addon maintains those standards and **requires a unique thread identifier to be passed to the comment component**. For example, in any template:
+Thus, this addon maintains those standards and **requires a unique thread identifier to be passed to the comment component**.
+
+To render the comment thread for any topic:
 
 ```hbs
 {{disqus-comments identifier=post.title}}
@@ -45,21 +47,20 @@ It's as simple as that!
 
 ------
 
-For advanced functionality, you can also pass a `title` argument, which makes working with threads on Disqus.com a bit easier. By default Disqus will use the identifier or the page URL for the thread title. However, you can override this functionality using the `title` argument. For example:
+For advanced functionality, you can pass an optional `title` argument, which makes working with threads on Disqus.com a bit easier. By default Disqus will use the identifier or the page URL for the thread title. However, you can override this functionality using the `title` argument. For example:
 
 ```hbs
 {{disqus-comments identifier=post.id title=post.title}}
 ```
 
-Please note, the use of `title` is optional and not necessary if your `identifier` is something human-friendly like a post title or URL slug.
 
-The third and final argument you can pass to the `{{disqus-comments}}` component is `categoryId`. This is used by Disqus to assign specific threads to categories. It is also optional. Please note, **Disqus only supports the use of categories once you have manually added them** in your [Disqus options](//octosmashed.disqus.com/admin/settings/advanced/).
+The `{{disqus-comments}}` component also accepts a `categoryId` property. This is used by Disqus to assign specific threads to categories. This is also optional. Please note, **Disqus only supports the use of categories once you have manually added them** in your [Disqus options](//octosmashed.disqus.com/admin/settings/advanced/).
 
 ```hbs
 {{disqus-comments identifier=postId categoryId=category.id}}
 ```
 
-This addon merely mirrors the capabilities of the Disqus plugin. For more information on the [individual configuration variables please see here](//help.disqus.com/customer/portal/articles/472098-javascript-configuration-variables).
+For more information on the [individual configuration variables please see the Disqus docs](//help.disqus.com/customer/portal/articles/472098-javascript-configuration-variables).
 
 ### Displaying comment counts
 
@@ -71,53 +72,39 @@ Like the other Disqus implementations in this plugin, the `{{disqus-comment-coun
 
 **This identifier must be the same identifier used to display the comment thread you are referencing**
 
-This will render the comment count for the specified comment thread in a lowly `<span>`. Simple!
+By default, this component will render the comment count for the specified comment thread in a lowly `<span>`. Simple!
+
+Disqus automatically renders the result with an associated noun. For example `8 Comments` or `1 Comment`. However, you can turn off this functionality and just show the digits by setting the `removeNoun` property to `true`:
+
+```hbs
+{{disqus-comment-count identifier=post.title removeNoun=true}}
+```
 
 ## Lazy Loading
 
-This addon tries to improve page performance by waiting to request Diqsus' assets until they are needed and the current document has finished loading. The reasoning behind this is that comments are usually complementary to the main content of a page and, thus, should not be loaded until after the main content has finished loading.
+This addon tries to improve page performance by waiting to request Diqsus' assets until they are needed and the current document has finished loading.
 
 In addition, this addon only loads the parts of the Disqus API that you need. If you don't use the comment count features then you won't load the comment count API!
 
-You can disable all lazyloading functionality by passing an additional option in your `config/environment.js` file:
+You can disable the lazy loading functionality by passing an additional option in your `config/environment.js` file:
 
 ```js
 module.exports = function(environment) {
   var ENV = {
 
-    APP: {
-      disqus: {
-        lazyLoad: false,
-        shortname: 'your-shortname-here'
-      }
-    },
+  /* ... */
+
+    disqus: {
+      shortname: 'your-shortname-here',
+      lazyLoad: false
+    }
   }
 }
 ```
 
 
-# Ember-disqus
+## Development
 
-This README outlines the details of collaborating on this Ember addon.
-
-## Installation
-
-* `git clone` this repository
-* `npm install`
-* `bower install`
-
-## Running
-
-* `ember server`
-* Visit your app at http://localhost:4200.
-
-## Running Tests
-
-* `ember test`
-* `ember test --server`
-
-## Building
-
-* `ember build`
-
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
+- `git clone https://github.com/sir-dunxalot/ember-disqus.git`
+- `ember s`
+- `ember test` or `/tests` route

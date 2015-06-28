@@ -26,7 +26,9 @@ export default Ember.Component.extend({
       this.get('element').addEventListener('DOMSubtreeModified', function(event) {
         const target = event.target;
 
-        target.textContent = target.textContent.replace(/[\D]/g, '')
+        /* Remove non-digit characters. For example '8 Comments' --> '8' */
+
+        target.textContent = target.textContent.replace(/[\D]/g, '');
       });
     }
 
