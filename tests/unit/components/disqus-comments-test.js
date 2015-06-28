@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import setupUnitTest from '../../helpers/setup-unit-test';
 
@@ -46,11 +47,11 @@ test('it renders', function(assert) {
 
   component.reset = function() {
     resetHasBeenCalled = true;
-  }
+  };
 
   component.setProperties(properties);
 
-  for (const property in properties) {
+  for (let property in properties) {
     const expectedValue = properties[property];
     const underscoredProperty = `disqus_${Ember.String.underscore(property)}`;
 
@@ -71,9 +72,10 @@ test('it renders', function(assert) {
   assert.equal(component._state, 'inDOM',
     'The component should render on the page');
 
-  assert.ok(component.$().hasClass('disqus_comments'),
-    'The component should have a .disqus_comments class');
+  assert.ok(component.$().hasClass('disqus-comments'),
+    'The component should have a .disqus-comments class');
 
   assert.equal(component.get('element').id, 'disqus_thread',
     'The component should have a #disqus_thread class per the Disqus documentation');
+
 });

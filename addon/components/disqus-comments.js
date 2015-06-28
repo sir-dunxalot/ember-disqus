@@ -6,7 +6,7 @@ import setOnWindow from 'ember-disqus/utils/observers/set-on-window';
 
 export default Ember.Component.extend({
   elementId: 'disqus_thread',
-  classNames: ['disqus_comments'],
+  classNames: ['disqus-comments'],
 
   /**
   Options that can be passed to identify the requested Disqus comment thread
