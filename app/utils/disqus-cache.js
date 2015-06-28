@@ -1,0 +1,1 @@
+export { default } from 'ember-disqus/utils/disqus-cache';
