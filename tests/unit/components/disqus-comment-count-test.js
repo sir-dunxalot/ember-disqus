@@ -25,6 +25,7 @@ moduleForComponent('disqus-comment-count', 'Unit | Component | disqus comment co
 });
 
 test('it renders', function(assert) {
+
   assert.expect(5);
 
   assert.equal(component._state, 'preRender',

@@ -10,6 +10,8 @@ export default function setupUnitTest(context, options) {
     options.shortname = shortname;
   }
 
+  console.log(context);
+
   context.container.register('config:environment', {
     disqus: disqusOptions
   });
