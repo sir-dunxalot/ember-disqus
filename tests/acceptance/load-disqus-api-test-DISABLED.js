@@ -2,6 +2,7 @@ import DisqusCache from 'ember-disqus/utils/disqus-cache';
 import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
+import loadDisqusApi from 'ember-disqus/utils/load-disqus-api';
 
 let application;
 
@@ -14,9 +15,13 @@ function testFileName(assert, fileName) {
 
   /* Make a single request for the embed file */
 
-  console.log('hey1');
+  andThen(function() {
+    console.log('nav worked');
+  });
+
+  // console.log('hey1');
   loadDisqusApiAndWait(fileName);
-  console.log('hey2');
+  // console.log('hey2');
 
   andThen(function() {
 
@@ -33,14 +38,16 @@ function testFileName(assert, fileName) {
   /* Now request the script again check the cache is called and
   not the getScript function */
 
-  loadDisqusApiAndWait(fileName, function(retrievedFromCache) {
+  // loadDisqusApiAndWait(fileName, function(retrievedFromCache) {
 
-    assert.ok(retrievedFromCache,
-      `The cache should handle the second API call for ${fileName}`);
+  //   assert.ok(retrievedFromCache,
+  //     `The cache should handle the second API call for ${fileName}`);
 
-  });
+  // });
 
   andThen(function() {
+    // loadDisqusApi('embed')
+
     console.log('andThen after the pause');
   });
 }
