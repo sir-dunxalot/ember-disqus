@@ -3,10 +3,9 @@ import Ember from 'ember';
 import defaultFor from 'ember-disqus/utils/default-for';
 
 export default function loadFilepickerApi(context, fileName) {
-  const documentIsReady = document.readyState === 'complete';
   const ENV = context.container.lookupFactory('config:environment');
 
-  let shortname, shouldLazyLoad;
+  let documentIsReady, shortname, shouldLazyLoad;
 
   Ember.assert('You must set a disqus.shortname option in your config/environment module', ENV.disqus && ENV.disqus.shortname);
 
@@ -19,9 +18,11 @@ export default function loadFilepickerApi(context, fileName) {
     window.disqus_shortname = shortname;
   }
 
+  documentIsReady = document.readyState === 'complete';
+
   /* Check to see is everything else in the app has loaded for lazy loading */
 
-  if (DisqusCache.fileName) {
+  if (DisqusCache[fileName]) {
 
     /* If window has the related Disqus property, don't load anything... */
 
@@ -39,13 +40,13 @@ export default function loadFilepickerApi(context, fileName) {
       }
     });
 
-    DisqusCache.fileName = true; // So we know API has loaded
+    DisqusCache[fileName] = true; // So we know API has loaded
   } else {
 
     /* ... Else wait a small period and check again to see if the Ember app has fully loaded. */
 
     Ember.run.debounce(this, function() {
       loadFilepickerApi(context, fileName);
-    }, 100);
+    }, 200);
   }
 }

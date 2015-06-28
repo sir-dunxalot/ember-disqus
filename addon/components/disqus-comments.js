@@ -72,7 +72,6 @@ export default Ember.Component.extend({
 
   _setCategoryId: setOnWindow('categoryId', 'disqus_category_id'),
   _setIdentifier: setOnWindow('identifier', 'disqus_identifier'),
-  _setShortname: setOnWindow('disqusOptions.shortname', 'disqus_shortname'),
   _setTitle: setOnWindow('title', 'disqus_title'),
 
   /**
