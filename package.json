@@ -1,7 +1,7 @@
 {
   "name": "ember-disqus",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.2.0",
+  "description": "An easy way to integrate the Disqus comments platform with your Ember.js apps using components and lazy loading",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -11,7 +11,7 @@
     "build": "ember build",
     "test": "ember try:testall"
   },
-  "repository": "",
+  "repository": "https://github.com/sir-dunxalot/ember-disqus",
   "engines": {
     "node": ">= 0.10.0"
   },
@@ -34,7 +34,14 @@
     "ember-try": "0.0.6"
   },
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "disqus",
+    "comments",
+    "comment",
+    "commenters",
+    "conversation",
+    "forum",
+    "blog"
   ],
   "dependencies": {
     "ember-cli-babel": "^5.0.0",
