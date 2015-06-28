@@ -7,6 +7,12 @@ export default function loadFilepickerApi(context, fileName) {
 
   let documentIsReady, filePath, cachedValue, shortname, shouldLazyLoad;
 
+  function tryCallback(retrievedFromCache) {
+    if (Ember.typeOf(context.disqusCallback) === 'function') {
+      context.disqusCallback(retrievedFromCache); // Ensure context
+    }
+  }
+
   Ember.assert('You must set a disqus.shortname option in your config/environment module', ENV.disqus && ENV.disqus.shortname);
 
   shortname = ENV.disqus.shortname;
@@ -34,16 +40,12 @@ export default function loadFilepickerApi(context, fileName) {
 
     /* If window has the related Disqus property, don't load anything... */
 
-    return;
+    return tryCallback(true);
   } else if (!shouldLazyLoad || documentIsReady) {
 
     /* ... Else if we're ready to load the Disqus API, load it... */
 
-    Ember.$.getScript(fileName).then(function() {
-      if (Ember.typeOf(context.disqusCallback) === 'function') {
-        context.disqusCallback(); // Ensure context
-      }
-    });
+    Ember.$.getScript(filePath).then(tryCallback(false));
 
     DisqusCache[filePath] = true; // So we know API has loaded
   } else {

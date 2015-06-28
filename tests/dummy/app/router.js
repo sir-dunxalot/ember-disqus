@@ -9,6 +9,7 @@ Router.map(function() {
   this.route('bacon');
   this.route('eggs');
   this.route('toast');
+  this.route('load-disqus-api');
 });
 
 export default Router;

@@ -3,6 +3,9 @@ import Application from '../../app';
 import Router from '../../router';
 import config from '../../config/environment';
 
+import inspect from './sync/inspect';
+import loadDisqusApiAndWait from './async/load-disqus-api-and-wait';
+
 export default function startApp(attrs) {
   var application;
 

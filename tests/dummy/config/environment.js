@@ -22,7 +22,7 @@ module.exports = function(environment) {
       "style-src": "'self' 'unsafe-inline' *.disquscdn.com",
       "frame-src": "'self' disqus.com",
       "img-src": "'self' *.disquscdn.com *.disqus.com",
-      "script-src": "'self' *.disqus.com *.disquscdn.com",
+      "script-src": "'self' 'unsafe-eval' *.disqus.com *.disquscdn.com",
     },
 
     disqus: {
