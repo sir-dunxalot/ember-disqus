@@ -80,7 +80,7 @@ export default Ember.Component.extend({
   @method _updateDisqusComments
   @private
 
-  @todo - need a better way of identifying if DISQUS is already laoded here
+  @todo - need a better way of identifying if DISQUS is already loaded here
   */
 
   _updateDisqusComments: Ember.observer('categoryId', 'identifier', 'shortname', 'title', function() {

@@ -80,6 +80,8 @@ Disqus automatically renders the result with an associated noun. For example `8 
 {{disqus-comment-count identifier=post.title removeNoun=true}}
 ```
 
+For advanced customization of the text see your [Disqus Admin --> Settings](http://disqus.com/admin/settings/) page.
+
 ## Lazy Loading
 
 This addon tries to improve page performance by waiting to request Diqsus' assets until they are needed and the current document has finished loading.

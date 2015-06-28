@@ -6,6 +6,9 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('bacon');
+  this.route('eggs');
+  this.route('toast');
 });
 
 export default Router;
