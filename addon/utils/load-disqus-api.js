@@ -2,8 +2,11 @@ import DisqusCache from 'ember-disqus/utils/disqus-cache';
 import Ember from 'ember';
 import defaultFor from 'ember-disqus/utils/default-for';
 
+const { getOwner } = Ember;
+
 export default function loadFilepickerApi(context, fileName) {
-  const ENV = context.container.lookupFactory('config:environment');
+  const owner = getOwner(context),
+    ENV = owner.resolveRegistration('config:environment');
 
   let documentIsReady, filePath, cachedValue, shortname, shouldLazyLoad;
 
