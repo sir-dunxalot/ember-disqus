@@ -60,11 +60,7 @@ export default Ember.Component.extend({
         config: function () {
           this.page.identifier = !disqus_url && identifier || undefined;
           this.page.url = disqus_url || window.location.href;
-          this.page.title = undefined;
-
-          if (title) {
-            this.page.title = title;
-          }
+          this.page.title = title || undefined;
         }
       });
     }, 100);
