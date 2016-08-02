@@ -13,6 +13,7 @@ export default Ember.Component.extend({
   */
 
   categoryId: null,
+  disqusUrl: null,
   identifier: null,
   title: null,
   layout: layout,
@@ -26,7 +27,7 @@ export default Ember.Component.extend({
   */
 
   setup: Ember.on('didInsertElement', function() {
-    Ember.assert('A Disqus identifier must be set on the {{disqus-comments}} component', this.get('identifier'));
+    Ember.assert('A Disqus identifier or disqusUrl must be set on the {{disqus-comments}} component', this.get('identifier') || this.get('disqusUrl'));
 
     if (!window.DISQUS) {
       loadDisqusApi(this, 'embed');
@@ -43,11 +44,13 @@ export default Ember.Component.extend({
   @method reset
   @param [identifier] the Disqus identifier to request the thread with. If not passed, will default to the component's current `identifier` property
   @param [title] the Disqus title to request the thread with. If not passed, will default to the component's current `title` property
+  @param [disqus_url] the Disqus url to optionally request a thread from a different url if your site is whitelisted. If passed, `identifier` will be ignored.
   */
 
-  reset: function(identifier, title) {
+  reset: function(identifier, title, disqus_url) {
     Ember.run.debounce(this, function() {
       identifier = defaultFor(identifier, this.get('identifier'));
+      disqus_url = defaultFor(disqus_url, this.get('disqusUrl'));
       title = defaultFor(title, this.get('title'));
 
       /** @ref https://help.disqus.com/customer/portal/articles/472107-using-disqus-on-ajax-sites */
@@ -55,8 +58,9 @@ export default Ember.Component.extend({
       window.DISQUS.reset({
         reload: true,
         config: function () {
-          this.page.identifier = identifier;
-          this.page.url = window.location.href;
+          this.page.identifier = !disqus_url && identifier || undefined;
+          this.page.url = disqus_url || window.location.href;
+          this.page.title = undefined;
 
           if (title) {
             this.page.title = title;
@@ -71,6 +75,7 @@ export default Ember.Component.extend({
   */
 
   _setCategoryId: setOnWindow('categoryId', 'disqus_category_id'),
+  _setDisqusUrl: setOnWindow('disqusUrl', 'disqus_url'),
   _setIdentifier: setOnWindow('identifier', 'disqus_identifier'),
   _setTitle: setOnWindow('title', 'disqus_title'),
 
@@ -83,7 +88,7 @@ export default Ember.Component.extend({
   @todo - need a better way of identifying if DISQUS is already loaded here
   */
 
-  _updateDisqusComments: Ember.observer('categoryId', 'identifier', 'shortname', 'title', function() {
+  _updateDisqusComments: Ember.observer('categoryId', 'disqusUrl', 'identifier', 'shortname', 'title', function() {
     if (window.DISQUS) {
       Ember.run.debounce(this, this.reset, 100);
     }
