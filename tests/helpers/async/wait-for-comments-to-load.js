@@ -1,8 +1,7 @@
 import Ember from 'ember';
-import loadDisqusApi from 'ember-disqus/utils/load-disqus-api';
 
 export default Ember.Test.registerAsyncHelper('waitForCommentsToLoad',
-  function(app, fileName, callback) {
+  function(app) {
 
     Ember.Test.registerWaiter(function() {
       const iframeExists = Ember.$('#disqus_thread iframe').length;
