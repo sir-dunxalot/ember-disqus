@@ -4,7 +4,7 @@ import defaultFor from 'ember-disqus/utils/default-for';
 
 const { getOwner } = Ember;
 
-export default function loadFilepickerApi(context, fileName) {
+export default function loadDisqusApi(context, fileName) {
   const owner = getOwner(context),
     ENV = owner.resolveRegistration('config:environment');
 
@@ -56,7 +56,7 @@ export default function loadFilepickerApi(context, fileName) {
     /* ... Else wait a small period and check again to see if the Ember app has fully loaded. */
 
     Ember.run.debounce(this, function() {
-      loadFilepickerApi(context, fileName);
+      loadDisqusApi(context, fileName);
     }, 200);
   }
 }
