@@ -1,6 +1,6 @@
 {
   "name": "ember-disqus",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "An easy way to integrate the Disqus comments platform with your Ember.js apps using components and lazy loading",
   "keywords": [
     "ember-addon",
