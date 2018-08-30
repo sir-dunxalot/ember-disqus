@@ -9,21 +9,18 @@ export default Ember.Test.registerAsyncHelper('loadDisqusApiAndWait',
 
     let done = false;
 
-    console.log('in async helper', done);
-
     /* Wait until the script is loaded before continuining
     the tests */
 
     Ember.run(function() {
       route.set('disqusCallback', function(retrievedFromCache) {
-        // Ember.run(function() {
 
-          if (Ember.typeOf(callback) === 'function') {
-            callback(retrievedFromCache);
-          }
+        if (Ember.typeOf(callback) === 'function') {
+          callback(retrievedFromCache);
+        }
 
-          done = true;
-        // });
+        done = true;
+
       });
     });
 

@@ -1,23 +1,19 @@
 import Ember from 'ember';
 import Application from '../../app';
-import Router from '../../router';
 import config from '../../config/environment';
 
-import inspect from './sync/inspect';
-import loadDisqusApiAndWait from './async/load-disqus-api-and-wait';
-import waitForCommentsToLoad from './async/wait-for-comments-to-load';
+import './sync/inspect';
+import './async/load-disqus-api-and-wait';
+import './async/wait-for-comments-to-load';
 
 export default function startApp(attrs) {
-  var application;
-
-  var attributes = Ember.merge({}, config.APP);
+  let attributes = Ember.merge({}, config.APP);
   attributes = Ember.merge(attributes, attrs); // use defaults, but you can override;
 
-  Ember.run(function() {
-    application = Application.create(attributes);
+  return Ember.run(() => {
+    let application = Application.create(attributes);
     application.setupForTesting();
     application.injectTestHelpers();
+    return application;
   });
-
-  return application;
 }
