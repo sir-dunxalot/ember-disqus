@@ -11,11 +11,10 @@ test('it renders', function(assert) {
   // Handle any actions with this.on('myAction', function(val) { ... });
 
   this.set('setup', () => {
-    true;
+    return true;
   });
 
   this.render(hbs`{{disqus-comments identifier='index' setup=setup}}`);
 
-  assert.equal(this.$().text().trim(), 'Loading comments...');
-
+  assert.equal(window.disqus_identifier, "index", "component loaded");
 });
