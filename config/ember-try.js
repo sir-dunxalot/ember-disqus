@@ -9,8 +9,7 @@ module.exports = function() {
     getChannelURL('canary')
   ]).then((urls) => {
     return {
-      <% if (yarn) { %>useYarn: true,
-      <% } %>scenarios: [
+      scenarios: [
         {
           name: 'ember-lts-2.12',
           npm: {
