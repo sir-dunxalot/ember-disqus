@@ -1,10 +1,14 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { assert } from '@ember/debug';
+import { debounce } from '@ember/runloop';
+import { observer } from '@ember/object';
+
 import defaultFor from 'ember-disqus/utils/default-for';
 import layout from '../templates/components/disqus-comments';
 import loadDisqusApi from 'ember-disqus/utils/load-disqus-api';
 import setOnWindow from 'ember-disqus/utils/observers/set-on-window';
 
-export default Ember.Component.extend({
+export default Component.extend({
   elementId: 'disqus_thread',
   classNames: ['disqus-comments'],
 
@@ -23,18 +27,18 @@ export default Ember.Component.extend({
 
   The `#disqus_thread` element (this component) must be on the page before the `embed.js` script is loaded. Thus, we run this method on `didInsertElement`.
 
-  @method setup
+  @method didInsertElement
   */
 
-  setup: Ember.on('didInsertElement', function() {
-    Ember.assert('A Disqus identifier or disqusUrl must be set on the {{disqus-comments}} component', this.get('identifier') || this.get('disqusUrl'));
+  didInsertElement() {
+    assert('A Disqus identifier or disqusUrl must be set on the {{disqus-comments}} component', this.get('identifier') || this.get('disqusUrl'));
 
     if (!window.DISQUS) {
       loadDisqusApi(this, 'embed');
     } else {
       this.reset();
     }
-  }),
+  },
 
   /**
   Adds ajax functionality to the comment thread. This method tells Disqus to load the comment thread with the given attributes.
@@ -47,8 +51,8 @@ export default Ember.Component.extend({
   @param [disqus_url] the Disqus url to optionally request a thread from a different url if your site is whitelisted. If passed, `identifier` will be ignored.
   */
 
-  reset: function(identifier, title, disqus_url) {
-    Ember.run.debounce(this, function() {
+  reset(identifier, title, disqus_url) {
+    debounce(this, function() {
       identifier = defaultFor(identifier, this.get('identifier'));
       disqus_url = defaultFor(disqus_url, this.get('disqusUrl'));
       title = defaultFor(title, this.get('title'));
@@ -84,9 +88,9 @@ export default Ember.Component.extend({
   @todo - need a better way of identifying if DISQUS is already loaded here
   */
 
-  _updateDisqusComments: Ember.observer('categoryId', 'disqusUrl', 'identifier', 'shortname', 'title', function() {
+  _updateDisqusComments: observer('categoryId', 'disqusUrl', 'identifier', 'shortname', 'title', function() {
     if (window.DISQUS) {
-      Ember.run.debounce(this, this.reset, 100);
+      debounce(this, this.reset, 100);
     }
   }),
 

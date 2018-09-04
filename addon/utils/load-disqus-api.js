@@ -1,8 +1,12 @@
-import DisqusCache from 'ember-disqus/utils/disqus-cache';
-import Ember from 'ember';
-import defaultFor from 'ember-disqus/utils/default-for';
+import $ from 'jquery';
 
-const { getOwner } = Ember;
+import { assert } from '@ember/debug';
+import { debounce } from '@ember/runloop';
+import { getOwner } from '@ember/application';
+import { typeOf } from '@ember/utils';
+
+import DisqusCache from 'ember-disqus/utils/disqus-cache';
+import defaultFor from 'ember-disqus/utils/default-for';
 
 export default function loadDisqusApi(context, fileName) {
   const owner = getOwner(context),
@@ -11,12 +15,12 @@ export default function loadDisqusApi(context, fileName) {
   let documentIsReady, filePath, cachedValue, shortname, shouldLazyLoad;
 
   function tryCallback(retrievedFromCache) {
-    if (Ember.typeOf(context.disqusCallback) === 'function') {
+    if (typeOf(context.disqusCallback) === 'function') {
       context.disqusCallback(retrievedFromCache); // Ensure context
     }
   }
 
-  Ember.assert('You must set a disqus.shortname option in your config/environment module', ENV.disqus && ENV.disqus.shortname);
+  assert('You must set a disqus.shortname option in your config/environment module', ENV.disqus && ENV.disqus.shortname);
 
   shortname = ENV.disqus.shortname;
   shouldLazyLoad = defaultFor(ENV.disqus.lazyLoad, true);
@@ -37,7 +41,7 @@ export default function loadDisqusApi(context, fileName) {
 
     /* Allow the cache to store methods for testing purposes, etc */
 
-    if (Ember.typeOf(cachedValue) === 'function') {
+    if (typeOf(cachedValue) === 'function') {
       cachedValue();
     }
 
@@ -48,14 +52,14 @@ export default function loadDisqusApi(context, fileName) {
 
     /* ... Else if we're ready to load the Disqus API, load it... */
 
-    Ember.$.getScript(filePath).then(tryCallback(false));
+    $.getScript(filePath).then(tryCallback(false));
 
     DisqusCache[filePath] = true; // So we know API has loaded
   } else {
 
     /* ... Else wait a small period and check again to see if the Ember app has fully loaded. */
 
-    Ember.run.debounce(this, function() {
+    debounce(this, function() {
       loadDisqusApi(context, fileName);
     }, 200);
   }

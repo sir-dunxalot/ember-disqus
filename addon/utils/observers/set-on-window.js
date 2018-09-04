@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import { on } from '@ember/object/evented';
+import { observer } from '@ember/object';
 
 export default function setOnWindow(dependentKey, propertyName) {
-  return Ember.on('init',
-    Ember.observer(dependentKey, function() {
+  return on('init',
+    observer(dependentKey, function() {
       window[propertyName] = this.get(dependentKey);
     })
   );
