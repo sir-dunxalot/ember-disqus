@@ -1,8 +1,10 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { assert } from '@ember/debug';
+
 import layout from '../templates/components/disqus-comment-count';
 import loadDisqusApi from 'ember-disqus/utils/load-disqus-api';
 
-export default Ember.Component.extend({
+export default Component.extend({
   attributeBindings: ['identifier:data-disqus-identifier'],
   classNames: ['disqus-comment-count'],
   layout: layout,
@@ -24,11 +26,11 @@ export default Ember.Component.extend({
   /**
   Assert that all required properties have been passed to this component and, if required, load the `count.js` script.
 
-  @method setup
+  @method didInsertElement
   */
 
-  setup: Ember.on('didInsertElement', function() {
-    Ember.assert('A Disqus identifier must be set on the {{disqus-comment-count}} component', this.get('identifier'));
+  didInsertElement() {
+    assert('A Disqus identifier must be set on the {{disqus-comment-count}} component', this.get('identifier'));
 
     if (this.get('removeNoun')) {
       this.get('element').addEventListener('DOMSubtreeModified', function(event) {
@@ -41,5 +43,6 @@ export default Ember.Component.extend({
     }
 
     loadDisqusApi(this, 'count');
-  }),
+  },
+
 });

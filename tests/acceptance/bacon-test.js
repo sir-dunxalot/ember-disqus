@@ -1,34 +1,29 @@
-import Ember from 'ember';
 import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { setupApplicationTest } from 'ember-qunit';
+import { currentURL, visit } from '@ember/test-helpers';
 
-var application;
+import inspect from '../helpers/inspect';
+import waitForCommentsToLoad from '../helpers/wait-for-comments-to-load';
 
-module('Acceptance | bacon', {
-  beforeEach: function() {
-    application = startApp();
-  },
+module('Acceptance | bacon', function(hooks) {
+  setupApplicationTest(hooks);
 
-  afterEach: function() {
-    Ember.run(application, 'destroy');
-  }
-});
+  test('visiting /bacon', async function(assert) {
+    await visit('/bacon');
 
-test('visiting /bacon', function(assert) {
-  visit('/bacon');
+    await waitForCommentsToLoad();
 
-  waitForCommentsToLoad();
-
-  andThen(function() {
     const commentCount = inspect('bacon-comment-count');
-    const comments = inspect('bacon-comments').find('iframe');
+    const comments = inspect('bacon-comments');
 
-    assert.equal(currentURL(), '/bacon');
+    assert.equal(currentURL(), '/bacon',
+      'The URL is not correct');
 
     assert.equal(commentCount.html(), '1 Comment',
       'The correct comment count should have been added to the DOM');
 
-    assert.ok(comments.attr('src').indexOf('disqus.com') > -1,
+    assert.ok(comments.find('iframe').attr('src').indexOf('disqus.com') > -1,
       'The comments iframe should have been added to the DOM');
   });
+
 });

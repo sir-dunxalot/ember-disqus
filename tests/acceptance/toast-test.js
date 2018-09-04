@@ -1,34 +1,30 @@
-import Ember from 'ember';
 import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { setupApplicationTest } from 'ember-qunit';
+import { currentURL, visit } from '@ember/test-helpers';
 
-var application;
+import inspect from '../helpers/inspect';
+import waitForCommentsToLoad from '../helpers/wait-for-comments-to-load';
 
-module('Acceptance | toast', {
-  beforeEach: function() {
-    application = startApp();
-  },
+module('Acceptance | toast', function(hooks) {
+  setupApplicationTest(hooks);
 
-  afterEach: function() {
-    Ember.run(application, 'destroy');
-  }
-});
+  test('visiting /toast', async function(assert) {
+    await visit('/toast');
 
-test('visiting /toast', function(assert) {
-  visit('/toast');
+    await waitForCommentsToLoad();
 
-  waitForCommentsToLoad();
-
-  andThen(function() {
     const commentCount = inspect('toast-comment-count');
     const comments = inspect('toast-comments').find('iframe');
 
-    assert.equal(currentURL(), '/toast');
+    assert.equal(currentURL(), '/toast',
+      'The URL is not correct');
 
     assert.equal(commentCount.html(), '1',
       'The correct comment count should have been added to the DOM with the removeNoun argument');
 
     assert.ok(comments.attr('src').indexOf('disqus.com') > -1,
       'The comments iframe should have been added to the DOM');
+
   });
+
 });
