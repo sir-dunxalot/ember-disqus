@@ -1,6 +1,7 @@
-import Ember from 'ember';
-import disqusCache from '../../../utils/disqus-cache';
+import { typeOf } from '@ember/utils';
 import { module, test } from 'qunit';
+
+import disqusCache from '../../../utils/disqus-cache';
 
 module('Unit | Utility | disqus cache');
 
@@ -11,7 +12,7 @@ test('it works', function(assert) {
   assert.ok(disqusCache,
     'The Disqus cache should exist in the application');
 
-  assert.equal(Ember.typeOf(disqusCache), 'object',
+  assert.equal(typeOf(disqusCache), 'object',
     'The Disqus cache should be POJO');
 
   assert.ok(disqusCache.isDisqusCache,

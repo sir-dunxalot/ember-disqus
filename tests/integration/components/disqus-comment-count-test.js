@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { later } from '@ember/runloop';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -19,7 +19,7 @@ test('it renders', function(assert) {
 
   assert.equal(this.$().text().trim(), '0');
 
-  Ember.run.later(this, () => {
+  later(this, () => {
     true;
   }, 3000);
 

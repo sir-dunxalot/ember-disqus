@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 
 export function initialize(/* container, application */) {
 
-  Ember.Component.reopen({
+  Component.reopen({
     attributeBindings: ['data-test'],
     'data-test': null,
   });
